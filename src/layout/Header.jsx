@@ -41,7 +41,7 @@ const Header = () => {
 
           <li>
             <Link
-              className="link" to="/" onClick={() => setIsOpen(false)}>
+              className="link" to="/home" onClick={() => setIsOpen(false)}>
               Home
             </Link>
           </li>
