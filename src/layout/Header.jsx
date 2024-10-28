@@ -31,7 +31,7 @@ const Header = () => {
 
   return (
     <header className="headerContainer">
-      <Link className="navbar-brand" to="/home"><h1>Virtual Bar SC</h1></Link>
+      <Link className="navbar-brand" to="/"><h1>Virtual Bar SC</h1></Link>
       <nav className="navbar">
         <div className="toggleButton" onClick={toggleMenu}>
           <span className={isOpen ? "line open" : "line"}></span>
@@ -41,7 +41,7 @@ const Header = () => {
 
           <li>
             <Link
-              className="link" to="/home" onClick={() => setIsOpen(false)}>
+              className="link" to="/" onClick={() => setIsOpen(false)}>
               Home
             </Link>
           </li>
@@ -58,7 +58,7 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <Link className="link" to="/" onClick={() => setIsOpen(false)}>
+            <Link className="link" to="/login" onClick={() => setIsOpen(false)}>
               Login
             </Link>
           </li>
