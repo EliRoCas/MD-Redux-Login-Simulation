@@ -1,17 +1,30 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../redux/slices/loginSlice";
 import { useNavigate } from "react-router-dom";
-import "./login.scss"
+import "./login.scss";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const users = useSelector((state) => state.users.users);
+
   const handleSubmit = ($event) => {
     $event.preventDefault();
-    dispatch(login());
-    navigate("/home")
-  }
+    const email = $event.target.email.value;
+    const password = $event.target.password.value;
+
+    const user = users.find(
+      (user) => user.email === email && user.password === password
+    );
+
+    if (user) {
+      dispatch(login());
+      navigate("/home");
+    } else {
+      alert("Invalid email or password. Please try again.");
+    }
+  };
 
   return (
     <div className="login">
@@ -28,9 +41,8 @@ const Login = () => {
 
         <button type="submit"> Login</button>
       </form>
-    </div >
+    </div>
   );
 };
-
 
 export default Login;

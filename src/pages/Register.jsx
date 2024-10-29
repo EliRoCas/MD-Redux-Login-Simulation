@@ -1,10 +1,12 @@
 import { useDispatch } from "react-redux";
 import { addUser } from "../redux/slices/usersSlice";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./register.scss";
 
 function Register() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -52,6 +54,8 @@ function Register() {
     });
 
     alert("User added successfully");
+
+    navigate("/login");
   };
 
   return (

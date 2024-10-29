@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../redux/slices/loginSlice";
 import { Link } from "react-router-dom";
 
 import "./header.scss";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
+
+  const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -25,48 +30,79 @@ const Header = () => {
 
     return () => {
       document.removeEventListener("click", handleClickOutside);
-    }
+    };
   }, [isOpen]);
 
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <header className="headerContainer">
-      <Link className="navbar-brand" to="/"><h1>Virtual Bar SC</h1></Link>
+      <Link className="navbar-brand" to="/">
+        <h1>Virtual Bar SC</h1>
+      </Link>
       <nav className="navbar">
         <div className="toggleButton" onClick={toggleMenu}>
           <span className={isOpen ? "line open" : "line"}></span>
           <span className={isOpen ? "line open" : "line"}></span>
         </div>
         <ul className={isOpen ? "nav-links open" : "nav-links"}>
-
           <li>
-            <Link
-              className="link" to="/home" onClick={() => setIsOpen(false)}>
+            <Link className="link" to="/home" onClick={() => setIsOpen(false)}>
               Home
             </Link>
           </li>
           <li>
             <Link
-              className="link" to="/results" onClick={() => setIsOpen(false)}>
+              className="link"
+              to="/results"
+              onClick={() => setIsOpen(false)}
+            >
               My Cocktails
             </Link>
           </li>
           <li>
-            <Link
-              className="link" to="/users" onClick={() => setIsOpen(false)}>
+            <Link className="link" to="/users" onClick={() => setIsOpen(false)}>
               My Class
             </Link>
           </li>
-          <li>
-            <Link className="link" to="/login" onClick={() => setIsOpen(false)}>
-              Login
-            </Link>
-          </li>
-          <li>
-            <Link className="link" to="/register" onClick={() => setIsOpen(false)}>
-              Sign Up
-            </Link>
-          </li>
+          {!isLoggedIn && (
+            <li>
+              <Link
+                className="link"
+                to="/register"
+                onClick={() => setIsOpen(false)}
+              >
+                Sign Up
+              </Link>
+            </li>
+          )}
+
+          {isLoggedIn ? (
+            <li>
+              <Link
+                className="link"
+                to="/"
+                onClick={() => {
+                  setIsOpen(false);
+                  handleLogout();
+                }}
+              >
+                Logout
+              </Link>
+            </li>
+          ) : (
+            <li>
+              <Link
+                className="link"
+                to="/login"
+                onClick={() => setIsOpen(false)}
+              >
+                Login
+              </Link>
+            </li>
+          )}
         </ul>
       </nav>
     </header>
@@ -74,9 +110,6 @@ const Header = () => {
 };
 
 export default Header;
-
-
-
 
 // import { useState } from "react";
 // import { Link } from "react-router-dom";
