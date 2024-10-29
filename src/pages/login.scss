@@ -9,7 +9,7 @@
   background-repeat: no-repeat;
 }
 
-form {
+.loginForm {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(4, 1fr);
@@ -19,8 +19,7 @@ form {
   width: 30%;
   height: auto;
   padding: 0.5rem;
-  background-color: #000;
-  opacity: 0.8;
+  background-color: rgba(0, 0, 0, 0.8);
   border-radius: 10px;
 
   grid-template-areas:
@@ -85,7 +84,7 @@ form {
 }
 
 @media (max-width: 768px) {
-  form {
+  .loginForm {
     width: 80%;
   }
 }

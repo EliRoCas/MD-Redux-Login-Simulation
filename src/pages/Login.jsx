@@ -15,7 +15,7 @@ const Login = () => {
 
   return (
     <div className="login">
-      <form onSubmit={handleSubmit}>
+      <form className="loginForm" onSubmit={handleSubmit}>
         <h2>Login</h2>
         <div className="email">
           <label htmlFor="email">Email</label>
@@ -31,5 +31,6 @@ const Login = () => {
     </div >
   );
 };
+
 
 export default Login;

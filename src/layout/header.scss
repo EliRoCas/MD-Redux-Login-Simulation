@@ -8,6 +8,9 @@
   background-color: #0c120c;
   padding: 0.2rem;
   color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 
   .navbar-brand h1 {
     margin: 0.2rem;
