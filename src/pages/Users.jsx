@@ -18,7 +18,7 @@ function Users() {
       <ul>
         {users.map((user) => (
           <li key={user.id}>
-            {user.name} {user.lastname} - {user.email}
+            {user.documentType} - {user.name} {user.lastname} - {user.email}
             <button onClick={() => handleRemove(user.id)}>
               <FaTrashAlt />
             </button>

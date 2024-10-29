@@ -1,8 +1,6 @@
 import { useDispatch } from "react-redux";
 import { addUser } from "../redux/slices/usersSlice";
-
 import { useState } from "react";
-
 import "./register.scss";
 
 function Register() {
@@ -32,7 +30,16 @@ function Register() {
       return;
     }
 
-    dispatch(addUser(formData));
+    for (const key in formData) {
+      if (formData[key] === "") {
+        alert(`Please fill out the ${key} field`);
+        return;
+      }
+    }
+
+    const userWithId = { ...formData, id: Date.now() };
+
+    dispatch(addUser(userWithId));
 
     setFormData({
       name: "",
@@ -73,7 +80,13 @@ function Register() {
         </div>
         <div className="documentType">
           <label htmlFor="documentType">Document Type</label>
-          <select name="documentType" id="documentType">
+          <select
+            name="documentType"
+            id="documentType"
+            value={formData.documentType}
+            onChange={handleChange}
+          >
+            <option value="">Select Document Type</option>
             <option value="cc">Citizenship Card</option>
             <option value="ti">Identity Card</option>
             <option value="passport">Passport</option>
@@ -120,7 +133,7 @@ function Register() {
           />
         </div>
 
-        <button type="submit"> Sign Up</button>
+        <button type="submit">Sign Up</button>
       </form>
     </div>
   );
