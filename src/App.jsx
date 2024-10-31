@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 
+
 function App() {
 
 
@@ -16,6 +17,24 @@ function App() {
     <Router>
       <MainLayout>
         <Routes>
+
+    {/* <Route
+            path="/"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/home" 
+            element={
+              <PublicRoute>
+                <Home />
+              </PublicRoute>
+            }
+          /> */}
+
           <Route path="/" element={<PrivateRoute> <Home /></PrivateRoute>} />
           <Route path="/home" element={<PrivateRoute> <Home /></PrivateRoute>} />
           <Route path="/results" element={<PrivateRoute> <Results /></PrivateRoute>} />
@@ -23,6 +42,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<NotFound />} />
+
         </Routes>
       </MainLayout>
     </Router>
