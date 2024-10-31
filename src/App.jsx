@@ -18,23 +18,6 @@ function App() {
       <MainLayout>
         <Routes>
 
-    {/* <Route
-            path="/"
-            element={
-              <PublicRoute>
-                <Login />
-              </PublicRoute>
-            }
-          />
-          <Route
-            path="/home" 
-            element={
-              <PublicRoute>
-                <Home />
-              </PublicRoute>
-            }
-          /> */}
-
           <Route path="/" element={<PrivateRoute> <Home /></PrivateRoute>} />
           <Route path="/home" element={<PrivateRoute> <Home /></PrivateRoute>} />
           <Route path="/results" element={<PrivateRoute> <Results /></PrivateRoute>} />
