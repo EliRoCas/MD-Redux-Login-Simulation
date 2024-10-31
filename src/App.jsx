@@ -1,21 +1,28 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, } from "react-router-dom";
 import MainLayout from "./layout/Layout";
-import PublicRoute from "./routes/PublicRoutes";
+import PrivateRoute from "./routes/PrivateRoutes";
+
+import Home from "./pages/Home";
+import Results from "./pages/Results";
+import Users from "./pages/Users";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
+import NotFound from "./pages/NotFound";
+import CocktailClass from "./components/CocktailClass.Jsx";
 
 function App() {
   return (
     <Router>
       <MainLayout>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <PublicRoute>
-                <Login />
-              </PublicRoute>
-            }
-          />
+          <Route path="/" element={<PrivateRoute> <Home /></PrivateRoute>} />
+          <Route path="/home" element={<PrivateRoute> <Home /></PrivateRoute>} />
+          <Route path="/results" element={<PrivateRoute> <Results/></PrivateRoute>} />
+          <Route path="/cocktailclass" element={<PrivateRoute> <CocktailClass/></PrivateRoute>} />
+          <Route path="/users" element={<PrivateRoute> <Users /></PrivateRoute>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </MainLayout>
     </Router>

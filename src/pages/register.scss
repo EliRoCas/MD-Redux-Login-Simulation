@@ -1,0 +1,212 @@
+.register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-image: url("../assets/img/cocktailRegister.jpg"); /* Fixed typo */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.registerForm {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 30%;
+  height: auto;
+  padding: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 10px;
+
+  grid-template-areas:
+    ". register register."
+    ". name lastname ."
+    ". documentType documentNumber ."
+    ". email email ."
+    ". password confirmPassword ."
+    ". button button .";
+
+  h2 {
+    grid-area: register;
+    text-align: center;
+    color: #fff;
+    font-size: 2rem;
+  }
+
+  div.name {
+    grid-area: name;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+
+    label {
+      color: #fff;
+    }
+
+    input {
+      padding: 0.2rem;
+      border-radius: 0.2rem;
+      border: none;
+    }
+  }
+
+  div.lastname {
+    grid-area: lastname;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+
+    label {
+      color: #fff;
+    }
+
+    input {
+      padding: 0.2rem;
+      border-radius: 0.2rem;
+      border: none;
+    }
+  }
+
+  div.documentType {
+    grid-area: documentType;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+
+    label {
+      color: #fff;
+    }
+
+    select {
+      padding: 0.2rem;
+      border-radius: 0.2rem;
+      border: none;
+    }
+  }
+
+  div.documentNumber {
+    grid-area: documentNumber;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+
+    label {
+      color: #fff;
+    }
+
+    input {
+      padding: 0.2rem;
+      border-radius: 0.2rem;
+      border: none;
+    }
+  }
+
+  div.email {
+    grid-area: email;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+
+    label {
+      color: #fff;
+    }
+
+    input {
+      padding: 0.2rem;
+      border-radius: 0.2rem;
+      border: none;
+      width: 80%;
+    }
+  }
+
+  div.password {
+    grid-area: password;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+
+    label {
+      color: #fff;
+    }
+
+    input {
+      padding: 0.2rem;
+      border-radius: 0.2rem;
+      border: none;
+    }
+  }
+
+  div.confirmPassword {
+    grid-area: confirmPassword;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+
+    label {
+      color: #fff;
+    }
+
+    input {
+      padding: 0.2rem;
+      border-radius: 0.2rem;
+      border: none;
+    }
+  }
+
+  button {
+    grid-area: button;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    padding: 0.5rem;
+    margin: 0.2rem;
+    margin-left: 25%;
+    border-radius: 0.2rem;
+    border: none;
+    background-color: #ff6347;
+    color: #fff;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 768px) {
+  .registerForm {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "register"
+      "name"
+      "lastname"
+      "documentType"
+      "documentNumber"
+      "email"
+      "password"
+      "confirmPassword"
+      "button";
+    width: 80%;
+
+    div.email {
+      input {
+        width: 40%;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .registerForm {
+    width: 45%;
+  }
+}
