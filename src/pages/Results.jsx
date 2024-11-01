@@ -1,16 +1,15 @@
-// src/components/Results.jsx
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCocktailsByCategory } from '../redux/slices/apiSlice';
-import { Link } from 'react-router-dom';
+import { fetchCocktailsByCategory, fetchCocktailDetails } from '../redux/slices/apiSlice';
 import './results.scss';
 
 const categories = ['All', 'Cocktail', 'Shot', 'Beer'];
 
 const Results = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCocktailId, setSelectedCocktailId] = useState(null);
   const dispatch = useDispatch();
-  const { cocktails, loading, error } = useSelector((state) => state.Results);
+  const { cocktails, cocktailDetails, loading, error } = useSelector((state) => state.Results);
 
   useEffect(() => {
     if (selectedCategory === 'All') {
@@ -22,8 +21,18 @@ const Results = () => {
     }
   }, [dispatch, selectedCategory]);
 
+  useEffect(() => {
+    if (selectedCocktailId) {
+      dispatch(fetchCocktailDetails(selectedCocktailId));
+    }
+  }, [dispatch, selectedCocktailId]);
+
   const handleChange = (e) => {
     setSelectedCategory(e.target.value);
+  };
+
+  const handleCocktailClick = (id) => {
+    setSelectedCocktailId(id);
   };
 
   if (loading) {
@@ -55,18 +64,44 @@ const Results = () => {
               <h2>{category}</h2>
               <div className="cocktails-list">
                 {cocktails[category] && cocktails[category].map((drink) => (
-                  <Link to={`/cocktailclass?id=${drink.idDrink}`} key={drink.idDrink}>
-                    <div className="cocktail-item">
-                      <img src={drink.strDrinkThumb} alt={drink.strDrink} />
-                      <h2>{drink.strDrink}</h2>
-                    </div>
-                  </Link>
+                  <div
+                    key={drink.idDrink}
+                    className="cocktail-item"
+                    onClick={() => handleCocktailClick(drink.idDrink)}
+                  >
+                    <img src={drink.strDrinkThumb} alt={drink.strDrink} />
+                    <h2>{drink.strDrink}</h2>
+                  </div>
                 ))}
               </div>
             </>
           )}
         </div>
       ))}
+      {selectedCocktailId && cocktailDetails && (
+        <div className="cocktail-details">
+          <h1>{cocktailDetails.strDrink}</h1>
+          <img src={cocktailDetails.strDrinkThumb} alt={cocktailDetails.strDrink} />
+          <div className="ingredients">
+            <h2>Ingredients</h2>
+            {Array.from({ length: 15 }, (_, i) => i + 1).map((i) => (
+              cocktailDetails[`strIngredient${i}`] && (
+                <div key={i} className="ingredient-item">
+                  <p>{cocktailDetails[`strIngredient${i}`]} - {cocktailDetails[`strMeasure${i}`]}</p>
+                </div>
+              )
+            ))}
+          </div>
+          <div className="instructions">
+            <h2>Instructions</h2>
+            <p>{cocktailDetails.strInstructions}</p>
+          </div>
+          <div className="glass-info">
+            <h2>Glass</h2>
+            <p>{cocktailDetails.strGlass}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
