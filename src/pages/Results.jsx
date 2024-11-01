@@ -45,8 +45,8 @@ const Results = () => {
 
   return (
     <div className="my-cocktails">
-      <h1>My Cocktails</h1>
-      <p>On this page, you can find all the available courses to learn about cocktails by category.</p>
+      <h1 className="cocktailTitle">My Cocktails</h1>
+      <p className="introduction">On this page, you can find all the available courses to learn about cocktails by category.</p>
       <div>
         <label htmlFor="category">Choose a category: </label>
         <select id="category" value={selectedCategory} onChange={handleChange}>
@@ -70,7 +70,7 @@ const Results = () => {
                     onClick={() => handleCocktailClick(drink.idDrink)}
                   >
                     <img src={drink.strDrinkThumb} alt={drink.strDrink} />
-                    <h2>{drink.strDrink}</h2>
+                    <h2 className="cocktailName">{drink.strDrink}</h2>
                   </div>
                 ))}
               </div>
@@ -83,7 +83,7 @@ const Results = () => {
           <h1>{cocktailDetails.strDrink}</h1>
           <img src={cocktailDetails.strDrinkThumb} alt={cocktailDetails.strDrink} />
           <div className="ingredients">
-            <h2>Ingredients</h2>
+            <h2 className="ingredientsTitle">Ingredients</h2>
             {Array.from({ length: 15 }, (_, i) => i + 1).map((i) => (
               cocktailDetails[`strIngredient${i}`] && (
                 <div key={i} className="ingredient-item">
@@ -93,11 +93,11 @@ const Results = () => {
             ))}
           </div>
           <div className="instructions">
-            <h2>Instructions</h2>
+            <h2 className="instructionsTitle">Instructions</h2>
             <p>{cocktailDetails.strInstructions}</p>
           </div>
           <div className="glass-info">
-            <h2>Glass</h2>
+            <h2 className="glassTitle">Glass</h2>
             <p>{cocktailDetails.strGlass}</p>
           </div>
         </div>
