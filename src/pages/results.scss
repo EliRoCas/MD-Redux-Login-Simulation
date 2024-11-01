@@ -1,4 +1,5 @@
 .my-cocktails {
+
   padding: 20px;
   h1 {
     text-align: center;
@@ -36,12 +37,10 @@
       }
       h2 {
         margin: 10px 0;
-        color: #fff;
         font-size: 1.5rem;
       }
       p {
         margin: 5px 0;
-        color: #fff;
         font-size: 1rem;
       }
       &:hover {
@@ -76,4 +75,9 @@
       }
     }
   }
+}
+
+
+p, h2, label {
+  color: #fff;
 }
