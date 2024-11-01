@@ -1,74 +1,75 @@
-// // src/components/ApiResults.js
-// import { useEffect } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { fetchCocktails } from '../redux/slices/apiSlice';
+// src/components/Results.jsx
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCocktailsByCategory } from '../redux/slices/apiSlice';
+import { Link } from 'react-router-dom';
+import './results.scss';
 
-import { Link } from "react-router-dom";
-import "./results.scss";
-
-const cocktails = [
-  {
-    strDrink: "3-Mile Long Island Iced Tea",
-    strDrinkThumb: "https://www.thecocktaildb.com/images/media/drink/rrtssw1472668972.jpg",
-    idDrink: "15300",
-  },
-  {
-    strDrink: "410 Gone",
-    strDrinkThumb: "https://www.thecocktaildb.com/images/media/drink/xtuyqv1472669026.jpg",
-    idDrink: "13581",
-  },
-  {
-    strDrink: "50/50",
-    strDrinkThumb: "https://www.thecocktaildb.com/images/media/drink/wwpyvr1461919316.jpg",
-    idDrink: "14598",
-  },
-  {
-    strDrink: "501 Blue",
-    strDrinkThumb: "https://www.thecocktaildb.com/images/media/drink/ywxwqs1461867097.jpg",
-    idDrink: "17105",
-  },
-  {
-    strDrink: "69 Special",
-    strDrinkThumb: "https://www.thecocktaildb.com/images/media/drink/vqyxqx1472669095.jpg",
-    idDrink: "13940",
-  },
-];
+const categories = ['All', 'Cocktail', 'Shot', 'Beer'];
 
 const Results = () => {
- 
-  // const dispatch = useDispatch();
-  // const { loading, cocktails, error } = useSelector(state => state.api);
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const dispatch = useDispatch();
+  const { cocktails, loading, error } = useSelector((state) => state.Results);
 
-  // useEffect(() => {
-  //   dispatch(fetchCocktails());
-  // }, [dispatch]);
+  useEffect(() => {
+    if (selectedCategory === 'All') {
+      categories.slice(1).forEach((category) => {
+        dispatch(fetchCocktailsByCategory(category));
+      });
+    } else {
+      dispatch(fetchCocktailsByCategory(selectedCategory));
+    }
+  }, [dispatch, selectedCategory]);
 
+  const handleChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
-    
-      <div className="my-cocktails">
-      <h1>My Cocktails Courses</h1>
-      <div className="filters">
-        <select >
-          <option value="all">All</option>
-          <option value="category1">Category 1</option>
-          <option value="category2">Category 2</option>
-          {/* Agrega más categorías según sea necesario */}
+    <div className="my-cocktails">
+      <h1>My Cocktails</h1>
+      <p>On this page, you can find all the available courses to learn about cocktails by category.</p>
+      <div>
+        <label htmlFor="category">Choose a category: </label>
+        <select id="category" value={selectedCategory} onChange={handleChange}>
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
         </select>
       </div>
-      <div className="cocktails-list">
-        {cocktails.map(cocktail =>(
-          <Link to={`/cocktailclass?id=${cocktail.idDrink}` } key={cocktail.idDrink}>
-            <div className="cocktail-item" >
-              <img src={cocktail.strDrinkThumb} alt={cocktail.strDrink} />
-              <h2>{cocktail.strDrink}</h2>
-            </div>
-          </Link>
-        ) )}
-        
-      </div>
+      {categories.slice(1).map((category) => (
+        <div key={category}>
+          {(selectedCategory === 'All' || selectedCategory === category) && (
+            <>
+              <h2>{category}</h2>
+              <div className="cocktails-list">
+                {cocktails[category] && cocktails[category].map((drink) => (
+                  <Link to={`/cocktailclass?id=${drink.idDrink}`} key={drink.idDrink}>
+                    <div className="cocktail-item">
+                      <img src={drink.strDrinkThumb} alt={drink.strDrink} />
+                      <h2>{drink.strDrink}</h2>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      ))}
     </div>
   );
 };
 
 export default Results;
+

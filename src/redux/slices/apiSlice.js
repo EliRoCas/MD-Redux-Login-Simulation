@@ -1,50 +1,72 @@
-// src/slices/apiSlice.js
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-export const fetchCocktails = createAsyncThunk(
-  'api/fetchCocktails',
-  async () => {
-    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita');
+// Acción para llamar a la API y obtener los cócteles por categoría
+const fetchCocktailsByCategory = (category) => async (dispatch) => {
+  dispatch(fetchCocktailsByCategoryPending());
+  try {
+    const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
     const data = await response.json();
-    return data.drinks;
+    dispatch(fetchCocktailsByCategoryFulfilled({ category, drinks: data.drinks.slice(0, 6) }));
+  } catch (error) {
+    dispatch(fetchCocktailsByCategoryRejected(error.message));
   }
-);
+};
 
-const apiSlice = createSlice({
-  name: 'api',
-  initialState: {
-    loading: false,
-    cocktails: [],
-    error: null
-  },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchCocktails.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchCocktails.fulfilled, (state, action) => {
-        state.loading = false;
-        state.cocktails = action.payload;
-      })
-      .addCase(fetchCocktails.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      });
+// Acción para llamar a la API y obtener detalles del cóctel por ID
+const fetchCocktailDetails = (id) => async (dispatch) => {
+  dispatch(fetchCocktailDetailsPending());
+  try {
+    const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
+    const data = await response.json();
+    dispatch(fetchCocktailDetailsFulfilled(data.drinks[0]));
+  } catch (error) {
+    dispatch(fetchCocktailDetailsRejected(error.message));
   }
+};
+
+const cocktailSlice = createSlice({
+  name: 'cocktails',
+  initialState: {
+    cocktails: {},
+    cocktailDetails: {},
+    loading: false,
+    error: null,
+  },
+  reducers: {
+    fetchCocktailsByCategoryPending: (state) => {
+      state.loading = true;
+    },
+    fetchCocktailsByCategoryFulfilled: (state, action) => {
+      state.loading = false;
+      state.cocktails[action.payload.category] = action.payload.drinks;
+    },
+    fetchCocktailsByCategoryRejected: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    fetchCocktailDetailsPending: (state) => {
+      state.loading = true;
+    },
+    fetchCocktailDetailsFulfilled: (state, action) => {
+      state.loading = false;
+      state.cocktailDetails = action.payload;
+    },
+    fetchCocktailDetailsRejected: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+  },
 });
 
-export default apiSlice.reducer;
+export const {
+  fetchCocktailsByCategoryPending,
+  fetchCocktailsByCategoryFulfilled,
+  fetchCocktailsByCategoryRejected,
+  fetchCocktailDetailsPending,
+  fetchCocktailDetailsFulfilled,
+  fetchCocktailDetailsRejected,
+} = cocktailSlice.actions;
 
+export { fetchCocktailsByCategory, fetchCocktailDetails };
 
-// const apiResults = async () => {
-//     try{
-//         const apiResponse = await fetch(apiURL);
-//         const apiData = await apiResponse.json();
-//         dispatch(fetchCocktailsSuccess(data.drinks));
-//         return 
-//     } catch (error){
-//         console.error ("Error: ", error);
-//     }; 
-
-// }
+export default cocktailSlice.reducer;

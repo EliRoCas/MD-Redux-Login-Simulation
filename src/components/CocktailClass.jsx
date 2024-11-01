@@ -22,7 +22,6 @@ const CocktailClass = () => {
     glass: "Collins Glass",
   };
 
-
   return (
     <div className="cocktail-details">
       <h1>{cocktail.name}</h1>
