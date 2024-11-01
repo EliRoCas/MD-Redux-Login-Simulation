@@ -11,8 +11,6 @@ import NotFound from "./pages/NotFound";
 
 
 function App() {
-
-
   return (
     <Router>
       <MainLayout>
@@ -20,7 +18,7 @@ function App() {
 
           <Route path="/" element={<PrivateRoute> <Home /></PrivateRoute>} />
           <Route path="/home" element={<PrivateRoute> <Home /></PrivateRoute>} />
-          <Route path="/results" element={<PrivateRoute> <Results /></PrivateRoute>} />
+          <Route path="/results" element={<PrivateRoute> <Results/></PrivateRoute>} />
           <Route path="/users" element={<PrivateRoute> <Users /></PrivateRoute>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
