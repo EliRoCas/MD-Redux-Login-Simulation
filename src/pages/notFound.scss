@@ -1,0 +1,47 @@
+.notFound {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: repeat;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "text text text"
+    ". image ."
+    ". button .";
+  height: 82vh;
+
+  font-family: "Bungee Spice", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #ff6347;
+
+  .nfText {
+    grid-area: text;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    color: #f5b041;
+  }
+
+  .nfImg {
+    grid-area: image;
+    width: 70%;
+    max-width: 600px;
+    margin: auto;
+    border-radius: 0.5rem;
+  }
+  .nfLink {
+    grid-area: button;
+    justify-content: center;
+    text-decoration: none;
+    color: #ff6347;
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-style: normal;
+    border: 2px solid #ff6347;
+    border-radius: 0.5rem;
+    padding: 10px 20px;
+    max-width: 20px auto;
+    text-align: center;
+  }
+}
